@@ -1,16 +1,19 @@
 <template>
     <div id="Main">
         <div id="Navigation">
-            <h1 class="text-white text-2xl font-bold mb-8">
+            <h1 class="busName text-2xl font-bold mb-8">
                 Medi-Link
             </h1>
             <section class="nav-items">
                 <NuxtLink to="/" class="nav-item1">Home</NuxtLink>
+                <NuxtLink to="/patients" class="nav-item2">Patients</NuxtLink>
             </section>
         </div>
         <section id="page">
             <div id="search-profile">
-                <input type="text" class="searchbar" placeholder="Search patients...">
+                <div class="profile">
+                    <p>DR</p>
+                </div>
             </div>
             <div id="content">
                 <NuxtPage />
@@ -22,6 +25,7 @@
 </template>
 
 <script setup>
+
 
 </script>
 
@@ -35,12 +39,34 @@
     min-height: 100vh;
     /* Full viewport height */
 }
+.busName{
+    color: #F5F5F5;
+}
 
-/* Navigation sidebar */
+/* ============================ Navigation ============================ */
 #Navigation {
     background-color: #7FBCD2;
     padding: 1rem;
     border-right: 1px solid #e0e0e0;
+}
+.nav-items {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+.router-link-exact-active {
+    color: black !important;
+    background-color: #F5F5F5;
+}
+[class*="nav-item"] {
+    color: #F5F5F5;
+    text-decoration: none;
+    font-size: 1.2rem;
+    font-weight: 600;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    transition: all 0.3s ease;
 }
 
 #page {
@@ -53,11 +79,26 @@
     display: flex;
     align-items: center;
     padding: 1rem;
-    border-bottom: 1px solid #e0e0e0;
 }
+.profile {
+    background-color: #E9C46A;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #7FBCD2;
+    font-weight: 600;
+    font-size: 1.2rem;
+}
+.profile p {
+    margin: 0;
+    color: black;
+}
+
 /* Main content area */
 #content {
-    height: 90vh;
     background-color: #F5F5F5;
     padding: 1rem;
     overflow-y: auto;

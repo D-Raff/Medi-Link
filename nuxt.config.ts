@@ -2,7 +2,7 @@
 export default defineNuxtConfig({
   compatibilityDate: '2024-11-01',
   devtools: { enabled: true },
-  modules: ['@hypernym/nuxt-gsap'],
+  modules: ['@hypernym/nuxt-gsap', "@pinia/nuxt"],
   gsap: {
     composables: true,
     provide: false,
