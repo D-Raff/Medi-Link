@@ -38,6 +38,7 @@
                             <p>{{ patient.additionalNotes }}</p>
                         </section>
                     </div>
+                    <button @click="deletePatient(patient.id)">Delete Patient</button>
                 </li>
             </ul>
         </div>
@@ -46,12 +47,19 @@
 
 <script setup>
 import { ref, computed } from 'vue';
+import { usePatientStore } from '~/stores/patients';
 
 const props = defineProps({
     patients: {
         type: Array,
     }
 });
+
+const patientStore = usePatientStore();
+
+const deletePatient = async (id) => {
+    await patientStore.deletePatient(id);
+};
 
 const searchQuery = ref('');
 
