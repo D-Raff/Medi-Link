@@ -43,6 +43,10 @@
 .busName{
     color: #F5F5F5;
 }
+#content {
+    overflow-y: auto;
+    /* Allows scrolling if content is too long */
+}
 
 /* ============================ Navigation ============================ */
 #Navigation {
@@ -72,7 +76,7 @@
 
 #page {
     display: grid;
-    grid-template-rows: 85px 1fr;
+    grid-template-rows: 80px 1fr;
     background-color: #7FBCD2;
 }
 #search-profile {
@@ -80,6 +84,7 @@
     display: flex;
     align-items: center;
     padding: 1rem;
+    z-index: 0;
 }
 .profile {
     background-color: #E9C46A;

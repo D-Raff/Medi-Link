@@ -6,7 +6,8 @@
                     v-model="searchQuery" @keyup="handleSearch">
             </div> -->
             <div class="search-box">
-                <input type="text" v-model="searchQuery" @keyup="handleSearch" placeholder="Search patients..." class="form-control">
+                <input type="text" v-model="searchQuery" @keyup="handleSearch" placeholder="Search patients..."
+                    class="form-control">
                 <span class="search-icon">🔍</span>
             </div>
         </div>
@@ -89,6 +90,23 @@
             </div>
         </div>
 
+        <div v-if="showDeleteModal" class="modal-overlay">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>Confirm Deletion</h3>
+                    <button class="close-button" @click="cancelDelete">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <p>Are you sure you want to delete this patient? This action cannot be undone.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="cancel-btn" @click="cancelDelete">Cancel</button>
+                    <button type="button" class="delete-btn" @click="confirmDelete">Delete</button>
+                </div>
+            </div>
+        </div>
+
+
     </div>
 </template>
 
@@ -101,6 +119,9 @@ const props = defineProps({
         type: Array,
     }
 });
+
+const showDeleteModal = ref(false);
+const patientToDelete = ref(null);
 
 onMounted(() => {
     useGsap.from(".patient-list-container", {
@@ -149,11 +170,26 @@ const handleCancel = () => {
     selectedPatient.value = null;
 };
 
-const deletePatient = async (id) => {
-    await patientStore.deletePatient(id);
+const deletePatient = (id) => {
+    patientToDelete.value = id;
+    showDeleteModal.value = true;
+};
+const searchQuery = ref('');
+
+const confirmDelete = async () => {
+    try {
+        await patientStore.deletePatient(patientToDelete.value);
+        showDeleteModal.value = false;
+        patientToDelete.value = null;
+    } catch (error) {
+        console.error('Error deleting patient:', error);
+    }
 };
 
-const searchQuery = ref('');
+const cancelDelete = () => {
+    showDeleteModal.value = false;
+    patientToDelete.value = null;
+};
 
 const filteredPatients = computed(() => {
     if (!searchQuery.value) return props.patients;
@@ -189,6 +225,7 @@ const handleSearch = () => {
     flex-direction: column;
     padding-top: 1rem;
     width: 100%;
+    min-height: 60vh;
 }
 
 .controls-wrapper {
@@ -238,6 +275,7 @@ const handleSearch = () => {
 
 .p-list {
     width: 100%;
+    height: 100%;
     list-style: none;
     padding: 0;
     margin: 0;
@@ -274,10 +312,11 @@ li button {
     margin-top: 1rem;
 }
 
-[data-edit]{
+[data-edit] {
     color: #7FBCD2;
 }
-[data-delete]{
+
+[data-delete] {
     color: #d12f42;
 }
 
@@ -288,7 +327,7 @@ li button {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.8);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -296,13 +335,15 @@ li button {
 }
 
 .modal-content {
-    background: white;
+    background: #F5F5F5;
     padding: 20px;
     border-radius: 8px;
+    border: 1px solid #646464;
     width: 90%;
     max-width: 500px;
-    max-height: 90vh;
+    max-height: 80vh;
     overflow-y: auto;
+    z-index: 999;
 }
 
 .modal-header {
@@ -359,6 +400,45 @@ li button {
     background-color: #007bff;
     color: white;
     border: none;
+}
+
+.delete-btn {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.delete-btn:hover {
+    background-color: #c82333;
+}
+
+/* .modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    padding: 1rem;
+}
+
+.modal-body {
+    padding: 1rem;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    border-bottom: 1px solid #dee2e6;
+} */
+
+.close-button {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
 }
 
 
