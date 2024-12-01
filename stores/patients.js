@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import { addDoc, collection, getDocs, doc, deleteDoc } from 'firebase/firestore';
+import { addDoc, collection, getDocs, doc, deleteDoc, updateDoc } from 'firebase/firestore';
 
 export const usePatientStore = defineStore("patientStore", {
     state: () => ({
@@ -39,7 +39,19 @@ export const usePatientStore = defineStore("patientStore", {
         },
 
         // updating patients
+        async updatePatient(id, payload) {
+            const { $db } = useNuxtApp()
 
+            const docRef = doc($db, "patients", id)
+
+            await updateDoc(docRef, payload)
+
+            const index = this.patients.findIndex(patient => patient.id === id)
+
+            if (index !== -1) {
+                this.patients[index] = { ...this.patients[index], ...payload }
+            }
+        },
 
         // deleting patients
         async deletePatient(id) {

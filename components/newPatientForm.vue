@@ -1,5 +1,5 @@
 <template>
-    <form @submit.prevent="handleSubmit" ref="formRef" class="bg-white p-8 rounded-lg shadow-md max-w-2xl mx-auto">
+    <form @submit.prevent="handleSubmit" ref="formRef" class="bg-white mx-auto">
         <h2>
             New Patient Registration
         </h2>
@@ -54,8 +54,7 @@
         <!-- Submit Button -->
         <div class="mt-8 flex justify-end">
             <button type="submit"
-                class="px-6 py-3 rounded-lg text-white font-medium transition-all duration-300 ease-in-out transform hover:scale-105"
-                style="background-color: #5C9EAD">
+                class="px-6 py-3 text-white">
                 Register Patient
             </button>
         </div>
@@ -131,6 +130,21 @@ textarea:focus {
     border-color: #5C9EAD;
     box-shadow: 0 0 0 3px rgba(92, 158, 173, 0.2);
 }
+input,
+select{
+    margin: .2rem;
+    padding: 10px 40px 10px 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+form{
+    margin-top: 1rem;
+    border-radius: 8px;
+    padding: 1rem;
+}
 
 h2 {
     font-weight: bold;
@@ -142,5 +156,11 @@ h3 {
     font-weight: bold;
     margin-bottom: 20px;
     color: #E9C46A;
+}
+
+button[type="submit"]{
+    background-color: #7FBCD2;
+    border: none;
+    border-radius: 8px;
 }
 </style>

@@ -7,6 +7,7 @@
             <section class="nav-items">
                 <NuxtLink to="/" class="nav-item1">Home</NuxtLink>
                 <NuxtLink to="/patients" class="nav-item2">Patients</NuxtLink>
+                <NuxtLink to="/visits" class="nav-item3">visits</NuxtLink>
             </section>
         </div>
         <section id="page">
